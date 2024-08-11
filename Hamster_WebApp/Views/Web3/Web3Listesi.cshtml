@@ -1,0 +1,210 @@
+﻿@model List<OrtakViewModel>
+
+<br />
+<div class="container">
+    <div class="p-3 mb-2 bg-secondary text-white" style="text-align:center;">
+        <h5>WEB3</h5>
+    </div>
+</div>
+@{
+    int solNo = 1;
+    int sagNo = 1;
+}
+<br />
+<div class="container">
+    <div class="col-md-6">
+        <input type="text" id="searchBox" class="form-control text-white" placeholder="Ara" style="background-color: rgb(40,40,40); caret-color:white; margin-left:325px;">
+    </div>
+</div>
+<br />
+<div class="row" id="resultsContainer">
+    <div class="col-md-6">
+        <table class="table border text-white">
+            <thead style="background-color:#8a2be2">
+                <tr>
+                    <th></th>
+                    <th></th>
+                    <th>SOL</th>
+                    <th></th>
+                    <th>Saatlik Kazanç/K</th>
+                    <th></th>
+                    <th>Yükseltme Maliyeti</th>
+                    <th></th>
+                    <th>100.000/K</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    @if (item.Sol != null)
+                    {
+                        <tr>
+                            <td style="text-align:center">
+
+                                @solNo
+
+                            </td>
+                            <td style="border-left: 1px solid #c9c9c9;"></td>
+                            <td>
+
+                                <a href="/Web3/Web3Edit?pId=@item.Id" class="text-white fw-bold" style="text-decoration: none;">@item.Sol</a>
+
+                            </td>
+                            <td style="border-left: 1px solid #c9c9c9;"></td>
+                            <td>
+
+                                @item.SaatlikKazanc
+
+                            </td>
+                            <td style="border-left: 1px solid #c9c9c9;"></td>
+                            <td>
+
+                                @(item.YukseltmeMaliyeti.HasValue ? item.YukseltmeMaliyeti.Value.ToString("N0", new System.Globalization.CultureInfo("tr-TR")) : "N/A")
+
+
+                            </td>
+                            <td style="border-left: 1px solid #c9c9c9;"></td>
+                            <td class="fw-bold">
+
+                                @item.Sonuc
+
+                            </td>
+                            <td>
+                                <a href="/Web3/Web3Edit?pId=@item.Id" class="text-success">
+                                    <i class="bi bi-pen"></i>
+                                </a>
+                            </td>
+                            <td>
+                                <a href="/Web3/Web3Delete?pId=@item.Id" class="text-danger" onclick='return Web3Sil()'>
+                                    <i class="bi bi-trash"></i>
+                                </a>
+                            </td>
+
+                        </tr>
+                        solNo++;
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <div class="col-md-6">
+        <table class="table border text-white">
+            <thead style="background-color:#8a2be2">
+                <tr>
+                    <th></th>
+                    <th></th>
+                    <th>SAĞ</th>
+                    <th></th>
+                    <th>Saatlik Kazanç/K</th>
+                    <th></th>
+                    <th>Yükseltme Maliyeti</th>
+                    <th></th>
+                    <th>100.000/K</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    @if (item.Sag != null)
+                    {
+                        <tr>
+                            <td style="text-align:center">
+
+                                @sagNo
+
+                            </td>
+                            <td style="border-left: 1px solid #c9c9c9;"></td>
+                            <td>
+
+                                <a href="/Web3/Web3Edit?pId=@item.Id" class="text-white fw-bold" style="text-decoration: none;">@item.Sag</a>
+
+                            </td>
+                            <td style="border-left: 1px solid #c9c9c9;"></td>
+                            <td>
+
+                                @item.SaatlikKazanc
+
+                            </td>
+                            <td style="border-left: 1px solid #c9c9c9;"></td>
+                            <td>
+
+                                @(item.YukseltmeMaliyeti.HasValue ? item.YukseltmeMaliyeti.Value.ToString("N0", new System.Globalization.CultureInfo("tr-TR")) : "N/A")
+
+                            </td>
+                            <td style="border-left: 1px solid #c9c9c9;"></td>
+                            <td class="fw-bold">
+
+                                @item.Sonuc
+
+                            </td>
+                            <td>
+
+                                <a href="/Web3/Web3Edit?pId=@item.Id" class="text-success">
+                                    <i class="bi bi-pen"></i>
+                                </a>
+
+                            </td>
+                            <td>
+
+                                <a href="/Web3/Web3Delete?pId=@item.Id" class="text-danger" onclick='return Web3Sil()'>
+                                    <i class="bi bi-trash"></i>
+                                </a>
+
+                            </td>
+                        </tr>
+                        sagNo++;
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+<br />
+<div class="row">
+
+    <div class="col-md-5">
+    </div>
+
+    <a href="/Web3/Web3Create" class="btn btn-primary col-md-2">
+        <i class="bi bi-cart-plus"></i>
+        Yeni Kayıt
+    </a>
+
+</div>
+
+<script type="text/javascript">
+
+    function Web3Sil() {
+
+        if (confirm("Silmek istediğinize emin misiniz?") == false) {
+            return false;
+        }
+    }
+
+</script>
+
+@section becScript {
+    <script>
+
+        $(document).ready(function () {
+            $('#searchBox').on('input', function () {
+                var searchTerm = $(this).val();
+                $.ajax({
+                    url: '/Web3/Web3Listesi',
+                    type: 'GET',
+                    data: { searchTerm: searchTerm },
+                    success: function (data) {
+                        var newResults = $(data).find('#resultsContainer').html();
+                        $('#resultsContainer').html(newResults);
+                    }
+                });
+            });
+        });
+
+    </script>
+}

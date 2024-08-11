@@ -1,0 +1,128 @@
+﻿@model List<TablolarViewModel>
+
+<br />
+@{
+    int baslangıcNo = 1;
+}
+<br />
+<div class="container">
+    <div class="col-md-6">
+        <input type="text" id="searchBox" class="form-control text-white" placeholder="Ara" style="background-color: rgb(40,40,40); caret-color:white; margin-left:325px;">
+    </div>
+</div>
+<br />
+<div id="resultsContainer">
+    <table class="table text-white">
+        <thead style="background-color:#0000ff">
+            <tr>
+                <th>NO</th>
+                <th>SOL/SAĞ</th>
+                <th>SAATLİK KAZANÇ/K</th>
+                <th>YÜKSELTME MALİYETİ</th>
+                <th>TABLO</th>
+                <th>100.000/K</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@baslangıcNo</td>
+                    <td>
+                        @{
+                            var tarih = "";
+                            string url = "";
+                            if (item.Tablo == "PRTeam")
+                            {
+                                url = $"/PRTeam/PRTeamEdit?pId={item.Id}";
+                            }
+                            else if (item.Tablo == "Markets")
+                            {
+                                url = $"/Markets/MarketsEdit?pId={item.Id}";
+                            }
+                            else if (item.Tablo == "Legal")
+                            {
+                                url = $"/Legal/LegalEdit?pId={item.Id}";
+                            }
+                            else if (item.Tablo == "Web3")
+                            {
+                                url = $"/Web3/Web3Edit?pId={item.Id}";
+                            }
+                            else if (item.Tablo == "Specials")
+                            {
+                                url = $"/Specials/SpecialsEdit?pId={item.Id}";
+
+                                @if (item.GeriSayim != null)
+                                {
+                                    <i class="bi bi-alarm" style="position: relative; top: -3px; color: yellow; font-size: 14px;"></i>
+                                    <span class="countdown" data-seconds="@item.TimeDifferenceInSeconds"></span>
+                                    <br />
+                                }
+                            }
+                        }
+                        @if (tarih != "")
+                        {
+                            @tarih
+                            <br />
+                        }
+                        <a href="@url" class="text-white fw-bold" style="text-decoration: none;">@(item.Sol ?? item.Sag ?? item.Orta)</a>
+                    </td>
+                    <td>@item.SaatlikKazanc</td>
+                    <td>@(item.YukseltmeMaliyeti.HasValue ? item.YukseltmeMaliyeti.Value.ToString("N0", new System.Globalization.CultureInfo("tr-TR")) : "N/A")</td>
+                    <td>
+                        @{
+                            if (item.Tablo == "PRTeam")
+                            {
+                                <a href="/PRTeam/PRTeamListesi" class="text-white fw-bold" style="text-decoration: none;">Pr&Team</a>
+                            }
+                            else if (item.Tablo == "Markets")
+                            {
+                                <a href="/Markets/MarketsListesi" class="text-white fw-bold" style="text-decoration: none;">Markets</a>
+                            }
+                            else if (item.Tablo == "Legal")
+                            {
+                                <a href="/Legal/LegalListesi" class="text-white fw-bold" style="text-decoration: none;">Legal</a>
+                            }
+                            else if (item.Tablo == "Web3")
+                            {
+                                <a href="/Web3/Web3Listesi" class="text-white fw-bold" style="text-decoration: none;">Web3</a>
+                            }
+                            else if (item.Tablo == "Specials")
+                            {
+                                <a href="/Specials/SpecialsListesi" class="text-white fw-bold" style="text-decoration: none;">Specials</a>
+                            }
+                        }
+                    </td>
+                    <td>@item.Sonuc</td>
+                </tr>
+                baslangıcNo++;
+            }
+        </tbody>
+    </table>
+</div>
+
+<script>
+    function startCountdown(element, seconds) {
+        function updateCountdown() {
+            if (seconds <= 0) {
+                element.innerHTML = "<span style='color: yellow;'>You own this card</span>";
+                return;
+            }
+            var hours = Math.floor(seconds / 3600);
+            var minutes = Math.floor((seconds % 3600) / 60);
+            var secs = Math.floor(seconds % 60);
+            element.textContent = `${hours}:${minutes}:${secs}`;
+            seconds--;
+            setTimeout(updateCountdown, 1000);
+        }
+        updateCountdown();
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        var countdownElements = document.querySelectorAll(".countdown");
+        countdownElements.forEach(function (element) {
+            var seconds = parseInt(element.getAttribute("data-seconds"), 10);
+            startCountdown(element, seconds);
+        });
+    });
+</script>

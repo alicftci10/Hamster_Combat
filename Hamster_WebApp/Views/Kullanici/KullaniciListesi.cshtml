@@ -1,0 +1,125 @@
+﻿@model KullaniciListViewModel
+
+<br />
+<div class="container">
+    <div class="p-3 mb-2 bg-secondary text-white" style="text-align:center;">
+        <h5>KULLANICILAR</h5>
+    </div>
+</div>
+@{
+    int siralama = 1;
+}
+<br />
+<div class="container">
+    <div class="row">
+        <table class="table border text-white">
+            <thead style="background-color:#008080">
+                <tr>
+                    <th></th>
+                    <th></th>
+                    <th>Ad Soyad</th>
+                    <th></th>
+                    <th>Kullanıcı Adı</th>
+                    <th></th>
+                    <th>Şifre</th>
+                    <th></th>
+                    <th>Güncelleme Tarihi</th>
+                    <th></th>
+                    <th>Yetki</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Kullanicilar)
+                {
+                    <tr>
+                        <td style="text-align:center">
+
+                            @siralama
+
+                        </td>
+                        <td style="border-left: 1px solid #c9c9c9;"></td>
+                        <td>
+
+                            <a href="/Kullanici/KullaniciEdit?pId=@item.Id" class="text-white fw-bold" style="text-decoration: none;">@item.Ad @item.Soyad</a>
+
+                        </td>
+                        <td style="border-left: 1px solid #c9c9c9;"></td>
+                        <td>
+
+                            @item.KullaniciAdi
+
+                        </td>
+                        <td style="border-left: 1px solid #c9c9c9;"></td>
+                        <td>
+
+                            @item.Sifre
+
+                        </td>
+                        <td style="border-left: 1px solid #c9c9c9;"></td>
+                        <td class="fw-bold">
+
+                            @item.KayitTarihi
+
+                        </td>
+                        <td style="border-left: 1px solid #c9c9c9;"></td>
+                        <td class="fw-bold">
+
+                            @{
+                                if (item.Yetki == 1)
+                                {
+                                    <span class="text-success">ADMİN</span>
+                                }
+                                else
+                                {
+                                    <span class="text-danger">KULLANICI</span>
+                                }
+                            }
+
+                        </td>
+                        <td>
+                            <a href="/Kullanici/KullaniciEdit?pId=@item.Id" class="text-success">
+                                <i class="bi bi-pen"></i>
+                            </a>
+                        </td>
+                        <td>
+                            <a href="/Kullanici/KullaniciDelete?pId=@item.Id" class="text-danger" onclick='return KullaniciSil()'>
+                                <i class="bi bi-trash"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    siralama++;
+                }
+            </tbody>
+        </table>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-md-5">
+        </div>
+        <span class="fw-bold text-danger" style="text-align:center;">@Model.ErrorMessage</span>
+    </div>
+    <div class="row">
+
+        <div class="col-md-5">
+        </div>
+
+        <a href="/Kullanici/KullaniciCreate" class="btn btn-primary col-md-2" id="btnKayit">
+            <i class="bi bi-cart-plus"></i>
+            Yeni Kayıt
+        </a>
+
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    function KullaniciSil() {
+
+        if (confirm("Silmek istediğinize emin misiniz?") == false) {
+            return false;
+        }
+    }
+
+</script>

@@ -1,0 +1,58 @@
+﻿@model OrtakViewModel
+
+<br />
+<div class="container">
+
+    <div class="p-3 mb-2 bg-secondary text-white" style="text-align:center;">
+        <h5>WEB3 EKLE</h5>
+    </div>
+    <br />
+
+    <form method="post" asp-action="Web3Create" asp-controller="Web3">
+
+
+        <div class="row border border-secondary text-white">
+
+            <div class="row">
+                <div class="form-group col-md-6" style="margin-left:115px;">
+                    <span class="fw-bold" style="margin-left:185px;">SOL</span>
+                    <div class="col-md-8">
+                        <input type="text" asp-for="Sol" class="form-control text-white" style="background-color: rgb(40,40,40); caret-color:white;" />
+                    </div>
+                </div>
+                <div class="form-group col-md-6" style="margin-right:-250px;">
+                    <span class="fw-bold" style="margin-left:185px;">SAĞ</span>
+                    <div class="col-md-8">
+                        <input type="text" asp-for="Sag" class="form-control text-white" style="background-color: rgb(40,40,40); caret-color:white;" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4"></div>
+            <div class="col-md-6" style="margin-top:20px;">
+                <div class="form-group">
+                    <span class="fw-bold" style="margin-left:135px;">Saatlik Kazanç/K</span>
+                    <div class="col-md-8">
+                        <input type="number" asp-for="SaatlikKazanc" class="form-control text-white" style="background-color: rgb(40,40,40); caret-color:white;" />
+                    </div>
+                    <span asp-validation-for="SaatlikKazanc" class="text-danger" style="margin-left:100px;"></span>
+                </div>
+                <br />
+                <div class="form-group">
+                    <span class="fw-bold" style="margin-left:135px;">Yükseltme Maliyeti</span>
+                    <div class="col-md-8">
+                        <input type="number" asp-for="YukseltmeMaliyeti" class="form-control text-white" style="background-color: rgb(40,40,40); caret-color:white;" />
+                    </div>
+                    <span asp-validation-for="YukseltmeMaliyeti" class="text-danger" style="margin-left:100px;"></span>
+                </div>
+                <div class="form-group" style="margin-bottom:10px; margin-left:160px; margin-top:10px;">
+
+                    <button class="btn btn-primary"> Kaydet</button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </form>
+</div>

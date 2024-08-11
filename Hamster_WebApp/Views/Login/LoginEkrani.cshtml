@@ -1,0 +1,109 @@
+﻿@{
+    Layout = null;
+}
+
+@model KullaniciViewModel
+
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Giriş Formu</title>
+
+    <script type="text/javascript" src="~/lib/jquery/js/jquery-3.7.1.min.js"></script>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+
+
+    <style type="text/css">
+
+        .login-bg {
+            height: 100%;
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-image: url(https://as2.ftcdn.net/v2/jpg/02/58/78/89/1000_F_258788966_clxYp6pUZkQWnHsoxjd5T9mGm6Cogy09.jpg);
+        }
+
+        .loginform {
+            margin-top: 150px;
+            padding-top: 5px;
+            border: solid;
+            border-radius: 8px;
+            border-color: #fff5f5 !important;
+            background-color: white;
+        }
+
+        .buttonDiv {
+            padding-top: 8px;
+        }
+
+    </style>
+
+
+</head>
+<body class="login-bg">
+
+
+    <div class="container">
+
+        <div class="row">
+
+            <div class="col-md-6">
+            </div>
+            <div class="col-md-6 loginform">
+
+                <div class="p-2 text-center bg-dark text-white">
+                    <h6>Giriş</h6>
+                </div>
+
+
+                <form method="post" asp-controller="Login" asp-action="LoginEkrani">
+
+                    <input type="hidden" asp-for="Ad" value="0" />
+                    <input type="hidden" asp-for="Soyad" value="0" />
+                    <input type="hidden" asp-for="Yetki" value="0" />
+
+                    <div class="form-group">
+                        <div class="row" style="margin-top:5px;">
+                            <div class="col-md-3">
+                                <label for="tbUserName">Kullanıcı Adı</label>
+                            </div>
+                            <div class="col-md-9">
+                                <input type="text" asp-for="KullaniciAdi" id="tbUserName" class="form-control" />
+                                <span asp-validation-for="KullaniciAdi" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="row" style="margin-top:5px;">
+                            <div class="col-md-3">
+                                <label for="tbPassword">Şifre</label>
+                            </div>
+                            <div class="col-md-9">
+                                <input type="password" asp-for="Sifre" id="tbPassword" class="form-control" />
+                                <span asp-validation-for="Sifre" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4"></div>
+                        <div class="buttonDiv col-md-7">
+                            <input type="submit" value="Giriş" class="btn btn-info col-md-6" id="btnLogin" />
+                        </div>
+                    </div>
+
+                    
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+</html>           

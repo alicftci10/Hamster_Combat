@@ -1,0 +1,222 @@
+﻿@model HamsterViewModel
+
+<br />
+<div class="container">
+    <div class="p-3 mb-2 bg-secondary text-white" style="text-align:center;">
+        <h5>HAMSTER</h5>
+    </div>
+</div>
+<br />
+<div class="container">
+    <div class="col-md-6">
+        <input type="text" id="searchBox" class="form-control text-white" placeholder="Ara" style="background-color: rgb(40,40,40); caret-color:white; margin-left:325px;">
+    </div>
+</div>
+<br />
+<div class="container" id="resultsContainer"></div>
+<br />
+<div class="container">
+    <div class="row text-white">
+        <div class="col-md-1">
+        </div>
+        <div class="col-md-4">
+            <h5 style="text-align:center;">En Büyük</h5>
+            <div class="p-3 mb-2 text-white" style="text-align:center; background-color:#008000;">
+
+                @if (Model.EnBuyukKaydet == 1 || Model.EnBuyukKaydet == 2)
+                {
+                    <a href="/PRTeam/PRTeamEdit?pId=@Model.EnBuyukId" class="text-black fw-bold" style="text-decoration: none;">@Model.EnBuyukDegerText</a>
+                }
+                @if (Model.EnBuyukKaydet == 3 || Model.EnBuyukKaydet == 4)
+                {
+                    <a href="/Markets/MarketsEdit?pId=@Model.EnBuyukId" class="text-black fw-bold" style="text-decoration: none;">@Model.EnBuyukDegerText</a>
+                }
+                @if (Model.EnBuyukKaydet == 5 || Model.EnBuyukKaydet == 6)
+                {
+                    <a href="/Legal/LegalEdit?pId=@Model.EnBuyukId" class="text-black fw-bold" style="text-decoration: none;">@Model.EnBuyukDegerText</a>
+                }
+                @if (Model.EnBuyukKaydet == 7 || Model.EnBuyukKaydet == 8)
+                {
+                    <a href="/Web3/Web3Edit?pId=@Model.EnBuyukId" class="text-black fw-bold" style="text-decoration: none;">@Model.EnBuyukDegerText</a>
+                }
+                @if (Model.EnBuyukKaydet == 9 || Model.EnBuyukKaydet == 10 || Model.EnBuyukKaydet == 11)
+                {
+                    if (Model.MaxTimeDifferenceInSeconds != null)
+                    {
+                        <i class="bi bi-alarm" style="position: relative; top: -3px; color: yellow; font-size: 14px;"></i>
+                        <span class="spcountdown" data-seconds="@Model.MaxTimeDifferenceInSeconds"></span>
+                        <br />
+                    }
+
+                    <a href="/Specials/SpecialsEdit?pId=@Model.EnBuyukId" class="text-black fw-bold" style="text-decoration: none;">@Model.EnBuyukDegerText</a>
+                }
+
+                <br />
+                @Model.EnBuyukDeger
+
+            </div>
+
+        </div>
+        <div class="col-md-2">
+        </div>
+        <div class="col-md-4">
+            <h5 style="text-align:center;">En Küçük</h5>
+            <div class="p-3 mb-2 text-white" style="text-align:center; background-color:#ff0000;">
+
+                @if (Model.EnKucukKaydet == 1 || Model.EnKucukKaydet == 2)
+                {
+                    <a href="/PRTeam/PRTeamEdit?pId=@Model.EnKucukId" class="text-black fw-bold" style="text-decoration: none;">@Model.EnKucukDegerText</a>
+                }
+                @if (Model.EnKucukKaydet == 3 || Model.EnKucukKaydet == 4)
+                {
+                    <a href="/Markets/MarketsEdit?pId=@Model.EnKucukId" class="text-black fw-bold" style="text-decoration: none;">@Model.EnKucukDegerText</a>
+                }
+                @if (Model.EnKucukKaydet == 5 || Model.EnKucukKaydet == 6)
+                {
+                    <a href="/Legal/LegalEdit?pId=@Model.EnKucukId" class="text-black fw-bold" style="text-decoration: none;">@Model.EnKucukDegerText</a>
+                }
+                @if (Model.EnKucukKaydet == 7 || Model.EnKucukKaydet == 8)
+                {
+                    <a href="/Web3/Web3Edit?pId=@Model.EnKucukId" class="text-black fw-bold" style="text-decoration: none;">@Model.EnKucukDegerText</a>
+                }
+                @if (Model.EnKucukKaydet == 9 || Model.EnKucukKaydet == 10 || Model.EnKucukKaydet == 11)
+                {
+                    if (Model.MinTimeDifferenceInSeconds != null)
+                    {
+                        <i class="bi bi-alarm" style="position: relative; top: -3px; color: yellow; font-size: 14px;"></i>
+                        <span class="spcountdown" data-seconds="@Model.MinTimeDifferenceInSeconds"></span>
+                        <br />
+                    }
+
+                    <a href="/Specials/SpecialsEdit?pId=@Model.EnKucukId" class="text-black fw-bold" style="text-decoration: none;">@Model.EnKucukDegerText</a>
+                }
+
+                <br />
+                @Model.EnKucukDeger
+
+            </div>
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-md-2">
+        </div>
+        <div class="col-md-4">
+
+            @if (Model.EnBuyukKaydet == 1 || Model.EnBuyukKaydet == 2)
+            {
+                <a href="/PRTeam/PRTeamListesi" class="btn btn-primary col-md-6" style="text-decoration: none;">PR&Team Listesine Git</a>
+            }
+            @if (Model.EnBuyukKaydet == 3 || Model.EnBuyukKaydet == 4)
+            {
+                <a href="/Markets/MarketsListesi" class="btn btn-primary col-md-6" style="text-decoration: none;">Markets Listesine Git</a>
+            }
+            @if (Model.EnBuyukKaydet == 5 || Model.EnBuyukKaydet == 6)
+            {
+                <a href="/Legal/LegalListesi" class="btn btn-primary col-md-6" style="text-decoration: none;">Legal Listesine Git</a>
+            }
+            @if (Model.EnBuyukKaydet == 7 || Model.EnBuyukKaydet == 8)
+            {
+                <a href="/Web3/Web3Listesi" class="btn btn-primary col-md-6" style="text-decoration: none;">Web3 Listesine Git</a>
+            }
+            @if (Model.EnBuyukKaydet == 9 || Model.EnBuyukKaydet == 10 || Model.EnBuyukKaydet == 11)
+            {
+                <a href="/Specials/SpecialsListesi" class="btn btn-primary col-md-6" style="text-decoration: none;">Specials Listesine Git</a>
+            }
+
+        </div>
+        <div class="col-md-2">
+        </div>
+        <div class="col-md-4">
+
+            @if (Model.EnKucukKaydet == 1 || Model.EnKucukKaydet == 2)
+            {
+                <a href="/PRTeam/PRTeamListesi" class="btn btn-primary col-md-6" style="text-decoration: none;">PR&Team Listesine Git</a>
+            }
+            @if (Model.EnKucukKaydet == 3 || Model.EnKucukKaydet == 4)
+            {
+                <a href="/Markets/MarketsListesi" class="btn btn-primary col-md-6" style="text-decoration: none;">Markets Listesine Git</a>
+            }
+            @if (Model.EnKucukKaydet == 5 || Model.EnKucukKaydet == 6)
+            {
+                <a href="/Legal/LegalListesi" class="btn btn-primary col-md-6" style="text-decoration: none;">Legal Listesine Git</a>
+            }
+            @if (Model.EnKucukKaydet == 7 || Model.EnKucukKaydet == 8)
+            {
+                <a href="/Web3/Web3Listesi" class="btn btn-primary col-md-6" style="text-decoration: none;">Web3 Listesine Git</a>
+            }
+            @if (Model.EnKucukKaydet == 9 || Model.EnKucukKaydet == 10 || Model.EnKucukKaydet == 11)
+            {
+                <a href="/Specials/SpecialsListesi" class="btn btn-primary col-md-6" style="text-decoration: none;">Specials Listesine Git</a>
+            }
+
+        </div>
+    </div>
+
+    <br />
+
+    <div class="row">
+        <div class="col-md-1">
+        </div>
+        <div class="col-md-5">
+            <a href="/Hamster/BuyuklerListesi" class="btn btn-secondary col-md-6" style="text-decoration: none; margin-left:85px;">En Büyükler Top 10</a>
+        </div>
+        <div class="col-md-1">
+        </div>
+        <div class="col-md-5">
+            <a href="/Hamster/KucuklerListesi" class="btn btn-secondary col-md-6" style="text-decoration: none; margin-left:85px;">En Küçükler Top 10</a>
+        </div>
+    </div>
+</div>
+
+@section becScript {
+    <script>
+
+        function startCountdown(element, seconds) {
+            function updateCountdown() {
+                if (seconds <= 0) {
+                    element.innerHTML = "<span style='color: yellow;'>You own this card</span>";
+                    return;
+                }
+                var hours = Math.floor(seconds / 3600);
+                var minutes = Math.floor((seconds % 3600) / 60);
+                var secs = Math.floor(seconds % 60);
+                element.textContent = `${hours}:${minutes}:${secs}`;
+                seconds--;
+                setTimeout(updateCountdown, 1000);
+            }
+            updateCountdown();
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            var countdownElements = document.querySelectorAll(".spcountdown");
+            countdownElements.forEach(function (element) {
+                var seconds = parseInt(element.getAttribute("data-seconds"), 10);
+                startCountdown(element, seconds);
+            });
+        });
+
+        $(document).ready(function () {
+            $('#searchBox').on('input', function () {
+                var searchTerm = $(this).val();
+                $.ajax({
+                    url: '/Hamster/SearchListesi',
+                    type: 'GET',
+                    data: { searchTerm: searchTerm },
+                    success: function (data) {
+                        var newResults = $(data).find('#resultsContainer').html();
+                        $('#resultsContainer').html(newResults);
+
+                        // Arama sonuçlarının yeniden yüklenmesi durumunda geri sayım fonksiyonlarını yeniden başlat
+                        var countdownElements = document.querySelectorAll(".countdown");
+                        countdownElements.forEach(function (element) {
+                            var seconds = parseInt(element.getAttribute("data-seconds"), 10);
+                            startCountdown(element, seconds);
+                        });
+                    }
+                });
+            });
+        });
+
+    </script>
+}

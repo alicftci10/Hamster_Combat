@@ -1,0 +1,347 @@
+﻿@model List<SpecialsViewModel>
+
+@{
+    var siraNoList = Model.OrderBy(i => i.SiraNo).ToList();
+    var ortaList = siraNoList.Where(i => i.Orta != null).ToList();
+}
+
+<br />
+<div class="container">
+    <div class="p-3 mb-2 bg-secondary text-white" style="text-align:center;">
+        <h5>SPECİALS</h5>
+    </div>
+</div>
+@{
+    int solNo = 1;
+    int ortaNo = 1;
+    int sagNo = 1;
+}
+<br />
+<div class="container">
+    <div class="col-md-6">
+        <input type="text" id="searchBox" class="form-control text-white" placeholder="Ara" style="background-color: rgb(40,40,40); caret-color:white; margin-left:325px;">
+    </div>
+</div>
+<br />
+<div id="resultsContainer">
+    @if (ortaList.Any())
+    {
+        <div class="container">
+            <table class="table border text-white" style="border-color:#008000!important">
+                <thead style="background-color:#008000">
+                    <tr>
+                        <th></th>
+                        <th>ORTA</th>
+                        <th>Saatlik Kazanç/K</th>
+                        <th>Yükseltme Maliyeti</th>
+                        <th>100.000/K</th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in ortaList)
+                    {
+                        <tr>
+                            <td style="text-align:center">
+
+                                @ortaNo
+
+                            </td>
+                            <td>
+                                @if (item.GeriSayim != null)
+                                {
+                                    <i class="bi bi-alarm" style="position: relative; top: -3px; color: yellow; font-size: 14px;"></i>
+                                    <span class="countdown" data-seconds="@item.TimeDifferenceInSeconds"></span>
+                                    <br />
+                                }
+
+                                <a href="/Specials/SpecialsEdit?pId=@item.Id" class="text-white fw-bold" style="text-decoration: none;">@item.Orta</a>
+
+                            </td>
+                            <td>
+
+                                @item.SaatlikKazanc
+
+                            </td>
+                            <td>
+
+                                @(item.YukseltmeMaliyeti.HasValue ? item.YukseltmeMaliyeti.Value.ToString("N0", new System.Globalization.CultureInfo("tr-TR")) : "N/A")
+
+                            </td>
+                            <td class="fw-bold">
+
+                                @item.Sonuc
+
+                            </td>
+                            <td>
+                                (@item.SiraNo)
+                            </td>
+                            <td>
+                                <a href="/Specials/SpecialsEdit?pId=@item.Id" class="text-success">
+                                    <i class="bi bi-pen"></i>
+                                </a>
+                            </td>
+                            <td>
+                                <a href="/Specials/SpecialsDelete?pId=@item.Id" class="text-danger" onclick='return SpecialsSil()'>
+                                    <i class="bi bi-trash"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        ortaNo++;
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+    <div class="row">
+        <div class="col-md-5"></div>
+        <a href="/Specials/Change" class="btn btn-primary" style="width:70px; margin-left:117px;">
+            <i class="bi bi-arrow-left-right" style="position: relative; top: -2px; color: black; font-size: 25px; font-weight:bold;"></i>
+        </a>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-md-6">
+            <table class="table border text-white">
+                <thead style="background-color:#800000">
+                    <tr>
+                        <th></th>
+                        <th></th>
+                        <th>SOL</th>
+                        <th></th>
+                        <th>Saatlik Kazanç/K</th>
+                        <th></th>
+                        <th>Yükseltme Maliyeti</th>
+                        <th></th>
+                        <th>100.000/K</th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in siraNoList)
+                    {
+                        @if (item.Sol != null)
+                        {
+                            <tr>
+                                <td style="text-align:center">
+
+                                    @solNo
+
+                                </td>
+                                <td style="border-left: 1px solid #c9c9c9;"></td>
+                                <td>
+                                    @if (item.GeriSayim != null)
+                                    {
+                                        <i class="bi bi-alarm" style="position: relative; top: -3px; color: yellow; font-size: 14px;"></i>
+                                        <span class="countdown" data-seconds="@item.TimeDifferenceInSeconds"></span>
+                                        <br />
+                                    }
+
+                                    <a href="/Specials/SpecialsEdit?pId=@item.Id" class="text-white fw-bold" style="text-decoration: none;">@item.Sol</a>
+
+                                </td>
+                                <td style="border-left: 1px solid #c9c9c9;"></td>
+                                <td>
+
+                                    @item.SaatlikKazanc
+
+                                </td>
+                                <td style="border-left: 1px solid #c9c9c9;"></td>
+                                <td>
+
+                                    @(item.YukseltmeMaliyeti.HasValue ? item.YukseltmeMaliyeti.Value.ToString("N0", new System.Globalization.CultureInfo("tr-TR")) : "N/A")
+
+
+                                </td>
+                                <td style="border-left: 1px solid #c9c9c9;"></td>
+                                <td class="fw-bold">
+
+                                    @item.Sonuc
+
+                                </td>
+                                <td>
+                                    (@item.SiraNo)
+                                </td>
+                                <td>
+                                    <a href="/Specials/SpecialsEdit?pId=@item.Id" class="text-success">
+                                        <i class="bi bi-pen"></i>
+                                    </a>
+                                </td>
+                                <td>
+                                    <a href="/Specials/SpecialsDelete?pId=@item.Id" class="text-danger" onclick='return SpecialsSil()'>
+                                        <i class="bi bi-trash"></i>
+                                    </a>
+                                </td>
+
+                            </tr>
+                            solNo++;
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-6">
+            <table class="table border text-white">
+                <thead style="background-color:#800000">
+                    <tr>
+                        <th></th>
+                        <th></th>
+                        <th>SAĞ</th>
+                        <th></th>
+                        <th>Saatlik Kazanç/K</th>
+                        <th></th>
+                        <th>Yükseltme Maliyeti</th>
+                        <th></th>
+                        <th>100.000/K</th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in siraNoList)
+                    {
+                        @if (item.Sag != null)
+                        {
+                            <tr>
+                                <td style="text-align:center">
+
+                                    @sagNo
+
+                                </td>
+                                <td style="border-left: 1px solid #c9c9c9;"></td>
+                                <td>
+                                    @if (item.GeriSayim != null)
+                                    {
+                                        <i class="bi bi-alarm icon-move-up" style="position: relative; top: -3px; color: yellow; font-size: 14px;"></i>
+                                        <span class="countdown" data-seconds="@item.TimeDifferenceInSeconds"></span>
+                                        <br />
+                                    }
+
+                                    <a href="/Specials/SpecialsEdit?pId=@item.Id" class="text-white fw-bold" style="text-decoration: none;">@item.Sag</a>
+
+                                </td>
+                                <td style="border-left: 1px solid #c9c9c9;"></td>
+                                <td>
+
+                                    @item.SaatlikKazanc
+
+
+                                </td>
+                                <td style="border-left: 1px solid #c9c9c9;"></td>
+                                <td>
+
+                                    @(item.YukseltmeMaliyeti.HasValue ? item.YukseltmeMaliyeti.Value.ToString("N0", new System.Globalization.CultureInfo("tr-TR")) : "N/A")
+
+                                </td>
+                                <td style="border-left: 1px solid #c9c9c9;"></td>
+                                <td class="fw-bold">
+
+                                    @item.Sonuc
+
+                                </td>
+                                <td>
+                                    (@item.SiraNo)
+                                </td>
+                                <td>
+
+                                    <a href="/Specials/SpecialsEdit?pId=@item.Id" class="text-success">
+                                        <i class="bi bi-pen"></i>
+                                    </a>
+
+                                </td>
+                                <td>
+
+                                    <a href="/Specials/SpecialsDelete?pId=@item.Id" class="text-danger" onclick='return SpecialsSil()'>
+                                        <i class="bi bi-trash"></i>
+                                    </a>
+
+                                </td>
+                            </tr>
+                            sagNo++;
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<br />
+<div class="row">
+
+    <div class="col-md-5">
+    </div>
+
+    <a href="/Specials/SpecialsCreate" class="btn btn-primary col-md-2">
+        <i class="bi bi-cart-plus"></i>
+        Yeni Kayıt
+    </a>
+
+</div>
+
+<script type="text/javascript">
+
+    function SpecialsSil() {
+
+        if (confirm("Silmek istediğinize emin misiniz?") == false) {
+            return false;
+        }
+    }
+
+</script>
+
+@section becScript {
+    <script>
+
+        function startCountdown(element, seconds) {
+            function updateCountdown() {
+                if (seconds <= 0) {
+                    element.innerHTML = "<span style='color: yellow;'>You own this card</span>";
+                    return;
+                }
+                var hours = Math.floor(seconds / 3600);
+                var minutes = Math.floor((seconds % 3600) / 60);
+                var secs = Math.floor(seconds % 60);
+                element.textContent = `${hours}:${minutes}:${secs}`;
+                seconds--;
+                setTimeout(updateCountdown, 1000);
+            }
+            updateCountdown();
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            var countdownElements = document.querySelectorAll(".countdown");
+            countdownElements.forEach(function (element) {
+                var seconds = parseInt(element.getAttribute("data-seconds"), 10);
+                startCountdown(element, seconds);
+            });
+        });
+
+        $(document).ready(function () {
+            $('#searchBox').on('input', function () {
+                var searchTerm = $(this).val();
+                $.ajax({
+                    url: '/Specials/SpecialsListesi',
+                    type: 'GET',
+                    data: { searchTerm: searchTerm },
+                    success: function (data) {
+                        var newResults = $(data).find('#resultsContainer').html();
+                        $('#resultsContainer').html(newResults);
+
+                        // Arama sonuçlarının yeniden yüklenmesi durumunda geri sayım fonksiyonlarını yeniden başlat
+                        var countdownElements = document.querySelectorAll(".countdown");
+                        countdownElements.forEach(function (element) {
+                            var seconds = parseInt(element.getAttribute("data-seconds"), 10);
+                            startCountdown(element, seconds);
+                        });
+                    }
+                });
+            });
+        });
+
+    </script>
+}

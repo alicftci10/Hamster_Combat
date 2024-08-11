@@ -1,0 +1,81 @@
+﻿@model KullaniciViewModel
+
+<br />
+<div class="container">
+
+    <div class="p-3 mb-2 bg-secondary text-white" style="text-align:center;">
+        <h5>KULLANICI GÜNCELLEME</h5>
+    </div>
+    <br />
+
+    <form method="post" asp-action="KullaniciEdit" asp-controller="Kullanici">
+
+
+        <div class="row border border-secondary text-white">
+
+            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="KayitTarihi" />
+
+            <div class="row">
+                <div class="form-group col-md-6" style="margin-left:115px;">
+                    <span class="fw-bold" style="margin-left:180px;">AD</span>
+                    <div class="col-md-8">
+                        <input type="text" asp-for="Ad" class="form-control text-white" style="background-color: rgb(40,40,40); caret-color:white;" />
+                    </div>
+                    <span asp-validation-for="Ad" class="text-danger" style="margin-left:30px;"></span>
+                </div>
+                <div class="form-group col-md-6" style="margin-right:-250px;">
+                    <span class="fw-bold" style="margin-left:170px;">SOYAD</span>
+                    <div class="col-md-8">
+                        <input type="text" asp-for="Soyad" class="form-control text-white" style="background-color: rgb(40,40,40); caret-color:white;" />
+                    </div>
+                    <span asp-validation-for="Soyad" class="text-danger" style="margin-left:30px;"></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-6" style="margin-left:115px;">
+                    <span class="fw-bold" style="margin-left:140px;">KULLANICI ADI</span>
+                    <div class="col-md-8">
+                        <input type="text" asp-for="KullaniciAdi" class="form-control text-white" style="background-color: rgb(40,40,40); caret-color:white;" />
+                    </div>
+                    <span asp-validation-for="KullaniciAdi" class="text-danger" style="margin-left:30px;"></span>
+                </div>
+                <div class="form-group col-md-6" style="margin-right:-250px;">
+                    <span class="fw-bold" style="margin-left:175px;">ŞİFRE</span>
+                    <div class="col-md-8">
+                        <input type="text" asp-for="Sifre" class="form-control text-white" style="background-color: rgb(40,40,40); caret-color:white;" />
+                    </div>
+                    <span asp-validation-for="Sifre" class="text-danger" style="margin-left:30px;"></span>
+                </div>
+            </div>
+            @if (Model.IsSuccess == true)
+            {
+                <input type="hidden" asp-for="Yetki" />
+            }
+            else
+            {
+                <div class="form-group col-md-6" style="margin-left:425px;">
+                    <span class="fw-bold" style="margin-left:185px;">YETKİ</span>
+                    <div class="col-md-8">
+                        <select asp-for="Yetki"
+                                asp-items="@ViewBag.Yetki" class="form-select text-white" style="background-color: rgb(40,40,40); caret-color:white;">
+                            <option selected value="">Seçiniz </option>
+                        </select>
+                    </div>
+                    <span asp-validation-for="Yetki" class="text-danger" style="margin-left:30px;"></span>
+                </div>
+            }
+            <div class="row">
+                <div class="col-md-5">
+                </div>
+                <span class="fw-bold text-danger" style="text-align:center;">@Model.ErrorMessage</span>
+            </div>
+            <div class="form-group" style="margin-bottom:10px; margin-left:530px; margin-top:10px;">
+
+                <button class="btn btn-primary col-md-2"> Kaydet</button>
+
+            </div>
+        </div>
+
+    </form>
+</div>
