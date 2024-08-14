@@ -69,18 +69,22 @@ namespace Hamster_WepApi
             {
                 i.IdleTimeout = TimeSpan.FromHours(6);//Session süresini 6 saat olarak ayarladýk.
             });
-            #endregion
+			#endregion
 
-            builder.Services.AddTransient<IKullaniciService, KullaniciManager>();
-            builder.Services.AddTransient<IHamsterService, HamsterManager>();
-            builder.Services.AddTransient<IPRTeamService, PRTeamManager>();
-            builder.Services.AddTransient<IMarketsService, MarketsManager>();
-            builder.Services.AddTransient<ILegalService, LegalManager>();
-            builder.Services.AddTransient<IWeb3Service, Web3Manager>();
-            builder.Services.AddTransient<ISpecialsService, SpecialsManager>();
+			#region IOS
+
+			builder.Services.AddTransient<IKullaniciService, KullaniciManager>();
+			builder.Services.AddTransient<IHamsterService, HamsterManager>();
+			builder.Services.AddTransient<IPRTeamService, PRTeamManager>();
+			builder.Services.AddTransient<IMarketsService, MarketsManager>();
+			builder.Services.AddTransient<ILegalService, LegalManager>();
+			builder.Services.AddTransient<IWeb3Service, Web3Manager>();
+			builder.Services.AddTransient<ISpecialsService, SpecialsManager>();
+
+			#endregion
 
 
-            var app = builder.Build();
+			var app = builder.Build();
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
