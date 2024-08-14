@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Hamster_DataAccess.EFOperations
 {
-    public class EFHamster : EFBase
+    public class EFHamster
     {
         public HamsterViewModel HamsterListesi(int KullaniciId)
         {

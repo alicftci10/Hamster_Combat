@@ -1,5 +1,7 @@
 ﻿using Hamster_DataAccess.DBContext;
 using Hamster_DataAccess.DBModels;
+using Hamster_DataAccess.EFInterface;
+using Hamster_DataAccess.GenericRepository.Repository;
 using Hamster_Entities.Models;
 using System;
 using System.Collections.Generic;
@@ -10,9 +12,11 @@ using System.Threading.Tasks;
 
 namespace Hamster_DataAccess.EFOperations
 {
-    public class EFKullanici : EFBase
-    {
-        public Kullanici GetKullanici(KullaniciViewModel model, out string? ErrorMessage)
+    public class EFKullanici : GenericRepository<Kullanici>, IEFKullaniciRepository
+	{
+		public EFKullanici(HamsterContext hamsterContext) : base(hamsterContext) { }
+
+		public Kullanici GetKullanici(KullaniciViewModel model, out string? ErrorMessage)
         {
             using (HamsterContext hs = new HamsterContext())
             {
@@ -77,45 +81,6 @@ namespace Hamster_DataAccess.EFOperations
             viewModel.ErrorMessage = ErrorMessage;
 
             return viewModel;
-        }
-
-        public Kullanici GetSelect(int pId)
-        {
-            using (HamsterContext hs = new HamsterContext())
-            {
-                var select = hs.Kullanicis.FirstOrDefault(i => i.Id == pId);
-
-                return select;
-            }
-        }
-
-        public int Add(Kullanici item)
-        {
-            using (HamsterContext hs = new HamsterContext())
-            {
-                hs.Kullanicis.Add(item);
-                return hs.SaveChanges();
-            }
-        }
-
-        public int Update(Kullanici item)
-        {
-            using (HamsterContext hs = new HamsterContext())
-            {
-                hs.Kullanicis.Update(item);
-                return hs.SaveChanges();
-            }
-        }
-        public Kullanici Delete(int pId)
-        {
-            using (HamsterContext hs = new HamsterContext())
-            {
-                var delete = hs.Kullanicis.FirstOrDefault(i => i.Id == pId);
-
-                hs.Kullanicis.Remove(delete);
-                hs.SaveChanges();
-                return delete;
-            }
         }
     }
 }

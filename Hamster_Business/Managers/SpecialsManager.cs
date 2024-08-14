@@ -1,5 +1,6 @@
 ﻿using Hamster_Business.Interfaces;
 using Hamster_DataAccess.DBModels;
+using Hamster_DataAccess.EFInterface;
 using Hamster_DataAccess.EFOperations;
 using Hamster_Entities.Models;
 using System;
@@ -10,65 +11,71 @@ using System.Threading.Tasks;
 
 namespace Hamster_Business.Managers
 {
-    public class SpecialsManager:BaseManager,ISpecialsService
-    {
-        private Special GetViewModel(SpecialsViewModel model)
-        {
-            Special item = new Special();
+	public class SpecialsManager : BaseManager, ISpecialsService
+	{
+		private readonly IEFSpecialsRepository _SpecialsRepository;
+		public SpecialsManager(IEFSpecialsRepository SpecialsRepository)
+		{
+			_SpecialsRepository = SpecialsRepository;
+		}
 
-            item.SiraNo = model.SiraNo.Value;
-            item.Sol = model.Sol;
-            item.Orta = model.Orta;
-            item.Sag = model.Sag;
-            item.SaatlikKazanc = model.SaatlikKazanc.Value;
-            item.YukseltmeMaliyeti = model.YukseltmeMaliyeti.Value;
-            item.GeriSayim = model.GeriSayim;
+		private Special GetViewModel(SpecialsViewModel model)
+		{
+			Special item = new Special();
 
-            item.KullaniciId = model.KullaniciId;
+			item.SiraNo = model.SiraNo.Value;
+			item.Sol = model.Sol;
+			item.Orta = model.Orta;
+			item.Sag = model.Sag;
+			item.SaatlikKazanc = model.SaatlikKazanc.Value;
+			item.YukseltmeMaliyeti = model.YukseltmeMaliyeti.Value;
+			item.GeriSayim = model.GeriSayim;
 
-            decimal kazanc = Convert.ToDecimal(model.SaatlikKazanc);
-            decimal maliyet = Convert.ToDecimal(model.YukseltmeMaliyeti);
+			item.KullaniciId = model.KullaniciId;
 
-            model.Sonuc = Math.Round(kazanc * 100000 / maliyet, 2);
+			decimal kazanc = Convert.ToDecimal(model.SaatlikKazanc);
+			decimal maliyet = Convert.ToDecimal(model.YukseltmeMaliyeti);
 
-            item.Sonuc = model.Sonuc;
+			model.Sonuc = Math.Round(kazanc * 100000 / maliyet, 2);
 
-            if (model.Id > 0)
-            {
-                item.Id = model.Id;
-            }
+			item.Sonuc = model.Sonuc;
 
-            return item;
-        }
+			if (model.Id > 0)
+			{
+				item.Id = model.Id;
+			}
 
-        public List<SpecialsViewModel> GetList(string searchTerm, int KullaniciId)
-        {
-            return new EFSpecials().List(searchTerm, KullaniciId);
-        }
+			return item;
+		}
 
-        public Special GetId(int pId)
-        {
-            return new EFSpecials().GetSelect(pId);
-        }
+		public List<SpecialsViewModel> GetList(string searchTerm, int KullaniciId)
+		{
+			return _SpecialsRepository.List(searchTerm, KullaniciId);
+		}
 
-        public int Add(SpecialsViewModel item)
-        {
-            return new EFSpecials().Add(GetViewModel(item));
-        }
+		public Special GetId(int pId)
+		{
+			return _SpecialsRepository.GetSelect(pId);
+		}
 
-        public int Update(SpecialsViewModel item)
-        {
-            return new EFSpecials().Update(GetViewModel(item));
-        }
+		public int Add(SpecialsViewModel item)
+		{
+			return _SpecialsRepository.Add(GetViewModel(item)).Id;
+		}
 
-        public Special Delete(int pId)
-        {
-            return new EFSpecials().Delete(pId);
-        }
+		public int Update(SpecialsViewModel item)
+		{
+			return _SpecialsRepository.Update(GetViewModel(item)).Id;
+		}
 
-        public void Change(int KullaniciId)
-        {
-            new EFSpecials().Change(KullaniciId);
-        }
-    }
+		public Special Delete(int pId)
+		{
+			return _SpecialsRepository.Delete(pId);
+		}
+
+		public void Change(int KullaniciId)
+		{
+			_SpecialsRepository.Change(KullaniciId);
+		}
+	}
 }

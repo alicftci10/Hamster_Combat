@@ -2,6 +2,10 @@ using Hamster_Business.Interfaces;
 using Hamster_Business.Managers;
 using Hamster_DataAccess.DBContext;
 using Hamster_DataAccess.DBModels;
+using Hamster_DataAccess.EFInterface;
+using Hamster_DataAccess.EFOperations;
+using Hamster_DataAccess.GenericRepository.Interfaces;
+using Hamster_DataAccess.GenericRepository.Repository;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -16,22 +20,10 @@ namespace Hamster_WepApi
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            #region DI SINIFI HAMSTERCONTEXT
-            //builder.Services.AddDbContext<HamsterContext>(options =>
-            //options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-            #endregion
-
-            // Add services to the container.
-
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
-
-            #region Generic Repository scoped eklemeleri
-            //builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
-            //builder.Services.AddScoped<ILegalService, LegalService>();
-            #endregion
 
             #region JWT Token Konfigürasyonu - Microsoft.AspNetCore.Authentication.JwtBearer
             /*
@@ -71,18 +63,29 @@ namespace Hamster_WepApi
             });
 			#endregion
 
-			#region IOS
+            #region IOS
 
-			builder.Services.AddTransient<IKullaniciService, KullaniciManager>();
+            builder.Services.AddDbContext<HamsterContext>(options =>
+            options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
 			builder.Services.AddTransient<IHamsterService, HamsterManager>();
+			builder.Services.AddTransient<IKullaniciService, KullaniciManager>();
 			builder.Services.AddTransient<IPRTeamService, PRTeamManager>();
 			builder.Services.AddTransient<IMarketsService, MarketsManager>();
 			builder.Services.AddTransient<ILegalService, LegalManager>();
 			builder.Services.AddTransient<IWeb3Service, Web3Manager>();
 			builder.Services.AddTransient<ISpecialsService, SpecialsManager>();
 
-			#endregion
+			builder.Services.AddTransient<IEFKullaniciRepository, EFKullanici>();
+			builder.Services.AddTransient<IEFPRTeamRepository, EFPRTeam>();
+            builder.Services.AddTransient<IEFMarketsRepository, EFMarkets>();
+            builder.Services.AddTransient<IEFLegalRepository, EFLegal>();
+            builder.Services.AddTransient<IEFWeb3Repository, EFWeb3>();
+            builder.Services.AddTransient<IEFSpecialsRepository, EFSpecials>();
 
+            builder.Services.AddTransient(typeof(IRepository<>), typeof(GenericRepository<>));
+
+			#endregion
 
 			var app = builder.Build();
 
@@ -101,7 +104,6 @@ namespace Hamster_WepApi
             app.UseAuthentication();// JWT doðrulama middleware'i
             app.UseAuthorization();// Yetkilendirilme middleware'i
             #endregion
-
 
             app.MapControllers();
 
