@@ -1,5 +1,6 @@
 ﻿using Hamster_Business.Interfaces;
 using Hamster_DataAccess.DBModels;
+using Hamster_DataAccess.EFInterface;
 using Hamster_DataAccess.EFOperations;
 using Hamster_Entities.Models;
 using System;
@@ -12,11 +13,16 @@ namespace Hamster_Business.Managers
 {
     public class KullaniciManager : BaseManager, IKullaniciService
     {
-        public KullaniciViewModel GetKullanici(KullaniciViewModel model)
+		private readonly IEFKullaniciRepository _KullaniciRepository;
+		public KullaniciManager(IEFKullaniciRepository KullaniciRepository)
+		{
+			_KullaniciRepository = KullaniciRepository;
+		}
+
+		public KullaniciViewModel GetKullanici(KullaniciViewModel model)
         {
             string? ErrorMessage = null;
-            EFKullanici kullanici = new EFKullanici();
-            Kullanici kul = kullanici.GetKullanici(model, out ErrorMessage);
+            Kullanici kul = _KullaniciRepository.GetKullanici(model, out ErrorMessage);
             
             model.Id = kul.Id;
             model.Ad = kul.Ad;
@@ -51,27 +57,27 @@ namespace Hamster_Business.Managers
 
         public KullaniciListViewModel GetList(string KullaniciAdi, int? Yetki, string? ErrorMessage)
         {
-            return new EFKullanici().List(KullaniciAdi, Yetki, ErrorMessage);
+            return _KullaniciRepository.List(KullaniciAdi, Yetki, ErrorMessage);
         }
 
         public Kullanici GetId(int pId)
         {
-            return new EFKullanici().GetSelect(pId);
+            return _KullaniciRepository.GetSelect(pId);
         }
 
         public int Add(KullaniciViewModel item)
         {
-            return new EFKullanici().Add(GetViewModel(item));
+            return _KullaniciRepository.Add(GetViewModel(item)).Id;
         }
 
         public int Update(KullaniciViewModel item)
         {
-            return new EFKullanici().Update(GetViewModel(item));
+            return _KullaniciRepository.Update(GetViewModel(item)).Id;
         }
 
         public Kullanici Delete(int pId)
         {
-            return new EFKullanici().Delete(pId);
+            return _KullaniciRepository.Delete(pId);
         }
     }
 }

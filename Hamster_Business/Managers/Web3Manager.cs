@@ -1,5 +1,6 @@
 ﻿using Hamster_Business.Interfaces;
 using Hamster_DataAccess.DBModels;
+using Hamster_DataAccess.EFInterface;
 using Hamster_DataAccess.EFOperations;
 using Hamster_Entities.Models;
 using System;
@@ -12,7 +13,13 @@ namespace Hamster_Business.Managers
 {
     public class Web3Manager:BaseManager,IWeb3Service
     {
-        private Web3 GetViewModel(OrtakViewModel model)
+		private readonly IEFWeb3Repository _Web3Repository;
+		public Web3Manager(IEFWeb3Repository Web3Repository)
+		{
+			_Web3Repository = Web3Repository;
+		}
+
+		private Web3 GetViewModel(OrtakViewModel model)
         {
             Web3 item = new Web3();
 
@@ -40,27 +47,27 @@ namespace Hamster_Business.Managers
 
         public List<OrtakViewModel> GetList(string searchTerm, int KullaniciId)
         {
-            return new EFWeb3().List(searchTerm, KullaniciId);
+            return _Web3Repository.List(searchTerm, KullaniciId);
         }
 
         public Web3 GetId(int pId)
         {
-            return new EFWeb3().GetSelect(pId);
+            return _Web3Repository.GetSelect(pId);
         }
 
         public int Add(OrtakViewModel item)
         {
-            return new EFWeb3().Add(GetViewModel(item));
+            return _Web3Repository.Add(GetViewModel(item)).Id;
         }
 
         public int Update(OrtakViewModel item)
         {
-            return new EFWeb3().Update(GetViewModel(item));
+            return _Web3Repository.Update(GetViewModel(item)).Id;
         }
 
         public Web3 Delete(int pId)
         {
-            return new EFWeb3().Delete(pId);
+            return _Web3Repository.Delete(pId);
         }
     }
 }

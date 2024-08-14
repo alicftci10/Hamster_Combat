@@ -1,5 +1,6 @@
 ﻿using Hamster_Business.Interfaces;
 using Hamster_DataAccess.DBModels;
+using Hamster_DataAccess.EFInterface;
 using Hamster_DataAccess.EFOperations;
 using Hamster_Entities.Models;
 using System;
@@ -13,6 +14,12 @@ namespace Hamster_Business.Managers
 {
     public class PRTeamManager : BaseManager, IPRTeamService
     {
+        private readonly IEFPRTeamRepository _PRTeamRepository;
+        public PRTeamManager(IEFPRTeamRepository PRTeamRepository)
+        {
+            _PRTeamRepository = PRTeamRepository;
+        }
+
         private PrTeam GetViewModel(OrtakViewModel model)
         {
             PrTeam item = new PrTeam();
@@ -41,27 +48,27 @@ namespace Hamster_Business.Managers
 
         public List<OrtakViewModel> GetList(string searchTerm, int KullaniciId)
         {
-            return new EFPRTeam().List(searchTerm, KullaniciId);
+            return _PRTeamRepository.List(searchTerm, KullaniciId);
         }
 
         public PrTeam GetId(int pId)
         {
-            return new EFPRTeam().GetSelect(pId);
+            return _PRTeamRepository.GetSelect(pId);
         }
 
         public int Add(OrtakViewModel item)
         {
-            return new EFPRTeam().Add(GetViewModel(item));
+            return _PRTeamRepository.Add(GetViewModel(item)).Id;
         }
 
         public int Update(OrtakViewModel item)
         {
-            return new EFPRTeam().Update(GetViewModel(item));
+            return _PRTeamRepository.Update(GetViewModel(item)).Id;
         }
 
         public PrTeam Delete(int pId)
         {
-            return new EFPRTeam().Delete(pId);
+            return _PRTeamRepository.Delete(pId);
         }
     }
 }
