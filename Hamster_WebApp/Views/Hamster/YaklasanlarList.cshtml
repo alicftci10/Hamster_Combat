@@ -22,29 +22,3 @@
         }
     </div>
 </div>
-
-<script>
-    function startCountdown(element, seconds) {
-        function updateCountdown() {
-            if (seconds <= 0) {
-                element.innerHTML = "<span style='color: yellow;'>You own this card</span>";
-                return;
-            }
-            var hours = Math.floor(seconds / 3600);
-            var minutes = Math.floor((seconds % 3600) / 60);
-            var secs = Math.floor(seconds % 60);
-            element.textContent = `${hours}:${minutes}:${secs}`;
-            seconds--;
-            setTimeout(updateCountdown, 1000);
-        }
-        updateCountdown();
-    }
-
-    document.addEventListener("DOMContentLoaded", function () {
-        var countdownElements = document.querySelectorAll(".ykcountdown");
-        countdownElements.forEach(function (element) {
-            var seconds = parseInt(element.getAttribute("data-seconds"), 10);
-            startCountdown(element, seconds);
-        });
-    });
-</script>
