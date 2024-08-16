@@ -498,6 +498,32 @@ namespace Hamster_DataAccess.EFOperations
             return model;
         }
 
+        public List<TablolarViewModel> YaklasanlarList(int KullaniciId)
+        {
+            using (HamsterContext hs = new HamsterContext())
+            {
+                var yaklasanlarList = hs.Specials.Where(i => i.KullaniciId == KullaniciId && DateTime.Now.AddDays(1) > i.GeriSayim && i.GeriSayim > DateTime.Now).Select(i => new TablolarViewModel
+                {
+                    Id = i.Id,
+                    SiraNo = i.SiraNo,
+                    Sol = i.Sol,
+                    Orta = i.Orta,
+                    Sag = i.Sag,
+                    SaatlikKazanc = i.SaatlikKazanc,
+                    YukseltmeMaliyeti = i.YukseltmeMaliyeti,
+                    Sonuc = i.Sonuc,
+                    GeriSayim = i.GeriSayim,
+                    TimeDifferenceInSeconds = (i.GeriSayim.HasValue ? (int)(i.GeriSayim.Value - DateTime.Now).TotalSeconds : (int?)null),
+                    KullaniciId = i.KullaniciId,
+                    stringSonuc = i.GeriSayim < DateTime.Now ? "You own this card" : null,
+                    Tablo = "Specials"
+
+                }).ToList();
+
+                return yaklasanlarList;
+            }
+        }
+
         public List<TablolarViewModel> SearchListesi(string searchTerm, int KullaniciId)
         {
             List<TablolarViewModel> searchResults = new List<TablolarViewModel>();

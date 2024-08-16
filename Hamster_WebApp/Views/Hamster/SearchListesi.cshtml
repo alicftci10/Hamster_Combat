@@ -55,7 +55,7 @@
                                 @if (item.GeriSayim != null)
                                 {
                                     <i class="bi bi-alarm" style="position: relative; top: -3px; color: yellow; font-size: 14px;"></i>
-                                    <span class="countdown" data-seconds="@item.TimeDifferenceInSeconds"></span>
+                                    <span class="stcountdown" data-seconds="@item.TimeDifferenceInSeconds"></span>
                                     <br />
                                 }
                             }
@@ -119,7 +119,7 @@
     }
 
     document.addEventListener("DOMContentLoaded", function () {
-        var countdownElements = document.querySelectorAll(".countdown");
+        var countdownElements = document.querySelectorAll(".stcountdown");
         countdownElements.forEach(function (element) {
             var seconds = parseInt(element.getAttribute("data-seconds"), 10);
             startCountdown(element, seconds);

@@ -16,6 +16,8 @@ namespace Hamster_Business.Interfaces
 
         List<TablolarViewModel> KucuklerListesi(int KullaniciId);
 
+        List<TablolarViewModel> YaklasanlarList(int KullaniciId);
+
         List<TablolarViewModel> SearchListesi(string searchTerm, int KullaniciId);
     }
 }

@@ -5,17 +5,14 @@
     <div class="p-3 mb-2 bg-secondary text-white" style="text-align:center;">
         <h5>HAMSTER</h5>
     </div>
-</div>
-<br />
-<div class="container">
+    <div id="yaklasanlarList"></div>
+    <br />
     <div class="col-md-6">
         <input type="text" id="searchBox" class="form-control text-white" placeholder="Ara" style="background-color: rgb(40,40,40); caret-color:white; margin-left:325px;">
     </div>
-</div>
-<br />
-<div class="container" id="resultsContainer"></div>
-<br />
-<div class="container">
+    <br />
+    <div id="resultsContainer"></div>
+    <br />
     <div class="row text-white">
         <div class="col-md-1">
         </div>
@@ -44,7 +41,7 @@
                     if (Model.MaxTimeDifferenceInSeconds != null)
                     {
                         <i class="bi bi-alarm" style="position: relative; top: -3px; color: yellow; font-size: 14px;"></i>
-                        <span class="spcountdown" data-seconds="@Model.MaxTimeDifferenceInSeconds"></span>
+                        <span class="countdown" data-seconds="@Model.MaxTimeDifferenceInSeconds"></span>
                         <br />
                     }
 
@@ -84,7 +81,7 @@
                     if (Model.MinTimeDifferenceInSeconds != null)
                     {
                         <i class="bi bi-alarm" style="position: relative; top: -3px; color: yellow; font-size: 14px;"></i>
-                        <span class="spcountdown" data-seconds="@Model.MinTimeDifferenceInSeconds"></span>
+                        <span class="countdown" data-seconds="@Model.MinTimeDifferenceInSeconds"></span>
                         <br />
                     }
 
@@ -189,7 +186,7 @@
         }
 
         document.addEventListener("DOMContentLoaded", function () {
-            var countdownElements = document.querySelectorAll(".spcountdown");
+            var countdownElements = document.querySelectorAll(".countdown");
             countdownElements.forEach(function (element) {
                 var seconds = parseInt(element.getAttribute("data-seconds"), 10);
                 startCountdown(element, seconds);
@@ -197,6 +194,23 @@
         });
 
         $(document).ready(function () {
+            // Sayfa yüklendiğinde AJAX isteği gönder
+            $.ajax({
+                url: '/Hamster/YaklasanlarList',
+                type: 'GET',
+                success: function (data) {
+                    var newResults = $(data).find('#yaklasanlarList').html();
+                    $('#yaklasanlarList').html(newResults);
+
+                    var countdownElements = document.querySelectorAll(".ykcountdown");
+                    countdownElements.forEach(function (element) {
+                        var seconds = parseInt(element.getAttribute("data-seconds"), 10);
+                        startCountdown(element, seconds);
+                    });
+                }
+            });
+
+            // Arama kutusu için AJAX işlemleri
             $('#searchBox').on('input', function () {
                 var searchTerm = $(this).val();
                 $.ajax({
@@ -207,8 +221,7 @@
                         var newResults = $(data).find('#resultsContainer').html();
                         $('#resultsContainer').html(newResults);
 
-                        // Arama sonuçlarının yeniden yüklenmesi durumunda geri sayım fonksiyonlarını yeniden başlat
-                        var countdownElements = document.querySelectorAll(".countdown");
+                        var countdownElements = document.querySelectorAll(".stcountdown");
                         countdownElements.forEach(function (element) {
                             var seconds = parseInt(element.getAttribute("data-seconds"), 10);
                             startCountdown(element, seconds);
@@ -217,6 +230,5 @@
                 });
             });
         });
-
     </script>
 }

@@ -59,7 +59,7 @@ namespace Hamster_WepApi
             builder.Services.AddDistributedMemoryCache();
             builder.Services.AddSession(i =>
             {
-                i.IdleTimeout = TimeSpan.FromHours(6);//Session süresini 6 saat olarak ayarladýk.
+                i.IdleTimeout = TimeSpan.FromHours(1);//Session süresini 6 saat olarak ayarladýk.
             });
 			#endregion
 

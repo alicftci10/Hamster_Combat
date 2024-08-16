@@ -45,6 +45,15 @@ namespace Hamster_WepApi.Controllers
 
         [HttpGet]
         [Authorize]
+        public IActionResult GetListYaklasanlar()
+        {
+            int KullaniciId = GetCurrentUserInfo(HttpContext).Id;
+
+            return Ok(_hamster.YaklasanlarList(KullaniciId));
+        }
+
+        [HttpGet]
+        [Authorize]
         public IActionResult GetListSearch(string? searchTerm)
         {
             int KullaniciId = GetCurrentUserInfo(HttpContext).Id;

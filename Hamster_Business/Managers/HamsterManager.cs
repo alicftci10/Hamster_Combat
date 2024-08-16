@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Hamster_Business.Managers
 {
-    public class HamsterManager:BaseManager,IHamsterService
+    public class HamsterManager : BaseManager, IHamsterService
     {
         public HamsterViewModel HamsterListesi(int KullaniciId)
         {
@@ -24,6 +24,11 @@ namespace Hamster_Business.Managers
         public List<TablolarViewModel> KucuklerListesi(int KullaniciId)
         {
             return new EFHamster().KucuklerListesi(KullaniciId);
+        }
+
+        public List<TablolarViewModel> YaklasanlarList(int KullaniciId)
+        {
+            return new EFHamster().YaklasanlarList(KullaniciId);
         }
 
         public List<TablolarViewModel> SearchListesi(string searchTerm, int KullaniciId)

@@ -29,7 +29,7 @@ namespace Hamster_WepApi.Controllers
                         new Claim("Id", pModel.Id.ToString())
                     },
                     notBefore: DateTime.UtcNow,
-                    expires: DateTime.UtcNow.Add(TimeSpan.FromMinutes(10)),
+                    expires: DateTime.UtcNow.Add(TimeSpan.FromHours(1)),
                     signingCredentials: new SigningCredentials(symmetricSecurityKey, SecurityAlgorithms.HmacSha256)
                 );
 

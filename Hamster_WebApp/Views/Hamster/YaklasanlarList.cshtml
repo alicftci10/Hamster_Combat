@@ -1,0 +1,50 @@
+﻿@model List<TablolarViewModel>
+
+
+<div id="yaklasanlarList">
+    <div class="row justify-content-center" style="padding-top:10px;">
+        @foreach (var item in Model)
+        {
+            <div class="p-1 mb-1 col-md-3 text-white border" style="text-align:center; background-color:black; border-color:red!important;">
+
+                @{
+                    <i class="bi bi-alarm" style="position: relative; top: -3px; color: red; font-size: 25px;"></i>
+                    <span class="ykcountdown" style="color:red; font-size:30px;" data-seconds="@item.TimeDifferenceInSeconds"></span>
+                    <br />
+
+                    <a href="/Specials/SpecialsEdit?pId=@item.Id" class="text-white fw-bold" style="text-decoration: none;">@(item.Sol ?? item.Sag ?? item.Orta)</a>
+                    <br />
+
+                    @item.Sonuc
+                }
+
+            </div>
+        }
+    </div>
+</div>
+
+<script>
+    function startCountdown(element, seconds) {
+        function updateCountdown() {
+            if (seconds <= 0) {
+                element.innerHTML = "<span style='color: yellow;'>You own this card</span>";
+                return;
+            }
+            var hours = Math.floor(seconds / 3600);
+            var minutes = Math.floor((seconds % 3600) / 60);
+            var secs = Math.floor(seconds % 60);
+            element.textContent = `${hours}:${minutes}:${secs}`;
+            seconds--;
+            setTimeout(updateCountdown, 1000);
+        }
+        updateCountdown();
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        var countdownElements = document.querySelectorAll(".ykcountdown");
+        countdownElements.forEach(function (element) {
+            var seconds = parseInt(element.getAttribute("data-seconds"), 10);
+            startCountdown(element, seconds);
+        });
+    });
+</script>
