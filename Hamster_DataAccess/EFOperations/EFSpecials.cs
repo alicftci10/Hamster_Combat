@@ -76,8 +76,8 @@ namespace Hamster_DataAccess.EFOperations
 				var ortaList = hs.Specials.OrderByDescending(i => i.SiraNo).Where(i => i.Orta != null && i.KullaniciId == KullaniciId).ToList();
 				var sagList = hs.Specials.OrderByDescending(i => i.SiraNo).Where(i => i.Sag != null && i.KullaniciId == KullaniciId).ToList();
 
-				var siraNoMax = 100;
-				var siraNoMin = 50;
+				var siraNoMax = 200;
+				var siraNoMin = 100;
 
 				foreach (var item in solList)
 				{
