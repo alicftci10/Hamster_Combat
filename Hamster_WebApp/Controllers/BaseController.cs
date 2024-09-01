@@ -42,7 +42,6 @@ namespace Hamster_WebApp.Controllers
                 {
                     ViewData["AdSoyad"] = model.Ad + " " + model.Soyad;
                 }
-
             }
             else
             {//Session Boş Logine yönlendir

@@ -20,14 +20,14 @@ namespace Hamster_WepApi.Controllers
         [HttpPost]
         public IActionResult Giris([FromBody] KullaniciViewModel model)
         {
-            var kullaniciList = _Kullanici.GetKullanici(model);
+            var kullanici = _Kullanici.GetKullanici(model);
 
-            if (kullaniciList.Id > 0)
+            if (kullanici.Id > 0)
             {
-                kullaniciList.JwtToken = GenerateJwtToken(kullaniciList);
+                kullanici.JwtToken = GenerateJwtToken(kullanici);
             }
 
-            return Ok(kullaniciList);
+            return Ok(kullanici);
         }
     }
 }

@@ -11,7 +11,7 @@ using System.Text;
 namespace Hamster_WepApi.Controllers
 {
     [ApiController]
-    public class BaseApiController : ControllerBase
+    public abstract class BaseApiController : ControllerBase
     {
         internal string GenerateJwtToken(KullaniciViewModel pModel)
         {
